@@ -22,7 +22,7 @@ class ProductController {
             req.body.cEan
         ];
         
-        const q = `INSERT INTO product (${productTable}) VALUES ?`;
+        const q = `INSERT INTO product (${productTable}) VALUES (?)`;
 
         db.query(q, [values], (error, data) => {
             if (error) return res.send(error);
@@ -31,14 +31,18 @@ class ProductController {
     }
 
     index(req: Request, res: Response) {
-        const { id } = req.params
-        const q = "SELECT * FROM product WHERE id = ?;";
+        const id = req.params.id;
+
+        const values = [id]
+
+        const q = "SELECT * FROM product WHERE id = ? LIMIT 1;"; 
         
-        db.query(q, id, (error, data) => {
+        db.query(q, values, (error, data) => {
             if (error) {
                 console.log(error);
                 return res.json(error);
             }
+
             return res.status(200).json(data);
         });
     }
