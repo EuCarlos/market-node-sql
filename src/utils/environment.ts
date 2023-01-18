@@ -15,3 +15,11 @@ export const productTable = [
     'cofins',
     'cEan'
 ]
+
+export const customerTable = [
+    'name',
+    'email',
+    'phone_number',
+    'cityId',
+    'zip_code'
+]
