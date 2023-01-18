@@ -1,9 +1,8 @@
-# Boilerplate TS
+# market-node-sql
 🌐 _Para a versão em português deste README, [clique aqui](./docs/locales/pt-br/README.md)._
 
 
 <p align="center">
-    Boilerplate with Express JS and TypeScript by <a href="https://github.com/EuCarlos">@EuCarlos</a><br>
     <img src="https://img.shields.io/badge/SWAGGER_UI-1d4145?style=for-the-badge&logo=swagger&logoColor=85ea2d" alt="Logo Swagger UI"/>
     <img src="https://img.shields.io/badge/-TypeScript-2f74c3?style=for-the-badge&logo=typescript&logoColor=white" alt="Logo TypeScript" />
     <img src="https://img.shields.io/badge/-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL"/>
