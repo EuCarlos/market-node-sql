@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { db } from "src/database/config";
+const logger = require('../logs/logger');
 
 class CityController {
     show(req: Request, res: Response) {
@@ -11,8 +12,12 @@ class CityController {
         const values = [Number(hasPagination), Number(skip)] // [search, hasPagination, skip]
         const q = "SELECT * FROM city LIMIT ? OFFSET ?";
 
-        db.query(q, values, (error, data) => {
-            if (error) return res.json(404).send(error);
+        db.query(q, values, (error: Error, data) => {
+            if (error) {
+                logger.error(`[GET: /cities] - ${error.message}`);
+                return res.json(404).send(error);
+            };
+
             return res.json(data);
         })
     }
@@ -21,8 +26,12 @@ class CityController {
         const id = req.params.id;
         const q = "SELECT * FROM city WHERE id = ?";
 
-        db.query(q, id, (error, data) => {
-            if (error) return res.json(404).send(error);
+        db.query(q, id, (error: Error, data) => {
+            if (error) {
+                logger.error(`[GET: /cities/:id] - ${error.message}`);
+                return res.json(404).send(error);
+            }
+            
             return res.json(data[0]);
         })
     }

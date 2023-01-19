@@ -1,13 +1,17 @@
 
 import { customerTable } from "src/utils/environment";
 import { db } from "../database/config";
+const logger = require('../logs/logger')
 
 class CustomerController {
     count(req, res) {
         const q = "SELECT COUNT(*) AS total FROM customer AS cr INNER JOIN city AS cy ON cr.cityId = cy.id"
 
         db.query(q, (error, data) => {
-            if (error) return res.json(error);
+            if (error) {
+                logger.error(`[GET: /customers/count] - ${error.message}`);
+                return res.json(error);
+            }
             
             return res.status(200).json(data[0]);
         });
@@ -25,7 +29,10 @@ class CustomerController {
         const q = `INSERT INTO customer (${customerTable}) VALUES (?)`;
         
         db.query(q, [values], (error: Error, data) => {
-            if (error) return res.status(400).send(error);
+            if (error) {
+                logger.error(`[POST: /customers] - ${error.message}`);
+                return res.status(400).send(error);
+            }
             return res.status(201).json({ message: "Customer created successfully" });
         });
     }
@@ -52,7 +59,10 @@ class CustomerController {
         `
 
         db.query(q, values, (error, data) => {
-            if (error) return res.status(404).json(error);
+            if (error) {
+                logger.error(`[GET: /customers] - ${error.message}`);
+                return res.status(404).json(error);
+            }
     
             return res.json({
                 data: data,
@@ -81,7 +91,10 @@ class CustomerController {
         `
         
         db.query(q, id, (error, data) => {
-            if (error) return res.status(404).json(error);
+            if (error) {
+                logger.error(`[GET: /customers/:id] - ${error.message}`);
+                return res.status(404).json(error);
+            }
 
             return res.json(data);
         });
@@ -109,7 +122,11 @@ class CustomerController {
         `;
 
         db.query(q, [...values, id], (error, data) => {
-            if (error) return res.status(406).send(error);
+            if (error) {
+                logger.error(`[PUT: : /customers/:id] - ${error.message}`);
+                return res.status(406).send(error);
+            }
+
             return res.status(202).json({
                 message: "Customer updated successfully"
             });
@@ -121,7 +138,11 @@ class CustomerController {
         const q = "DELETE FROM customer WHERE id = ?";
     
         db.query(q, id, (error, data) => {
-            if (error) return res.status(405).send(error);
+            if (error) {
+                logger.error(`[DELETE: /customers/:id] - ${error.message}`);
+                return res.status(405).send(error);
+            }
+
             return res.status(204).json({
                 message: "Customer deleted successfully"
             });

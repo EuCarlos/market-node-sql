@@ -1,2 +1,13 @@
 node_modules
+
+# environments
 .env
+.env.production
+.env.developement
+
+# notes
+.notes
+
+# logs
+**/error.log
+**/info.log
