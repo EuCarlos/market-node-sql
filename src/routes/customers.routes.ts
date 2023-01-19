@@ -5,6 +5,7 @@ import customerController from '@controllers/customer.controller';
 
 router
     .get('/', customerController.show)
+    .get('/count', customerController.count)
     .get('/:id', customerController.index)
     .post('/', customerController.create)
     .put('/:id', customerController.update)

@@ -3,6 +3,16 @@ import { customerTable } from "src/utils/environment";
 import { db } from "../database/config";
 
 class CustomerController {
+    count(req, res) {
+        const q = "SELECT COUNT(*) AS total FROM customer AS cr INNER JOIN city AS cy ON cr.cityId = cy.id"
+
+        db.query(q, (error, data) => {
+            if (error) return res.json(error);
+            
+            return res.status(200).json(data[0]);
+        });
+    }
+
     create(req, res) {
         const values = [
             req.body.name,
@@ -14,9 +24,9 @@ class CustomerController {
         
         const q = `INSERT INTO customer (${customerTable}) VALUES (?)`;
         
-        db.query(q, [values], (error, data) => {
+        db.query(q, [values], (error: Error, data) => {
             if (error) return res.send(error);
-            return res.json(201).json(data);
+            return res.status(201).json({ message: "Customer created successfully" });
         });
     }
 
@@ -40,13 +50,22 @@ class CustomerController {
         LIMIT ?
         OFFSET ?;
         `
-        
+
         db.query(q, values, (error, data) => {
             if (error) {
                 console.log(error);
                 return res.json(error);
             }
-            return res.status(200).json(data);
+            
+            return res.status(200).json({
+                data: data,
+                page: {
+                    previous: skip <= 0 ? undefined: skip - 1,
+                    current: skip,
+                    next: skip + 1,
+                    totalPages: 0 // corrigir esse problema
+                }
+            });
         });
     }
 
@@ -96,7 +115,7 @@ class CustomerController {
         `;
 
         db.query(q, [...values, id], (error, data) => {
-            if (error) return res.status(204).send(error);
+            if (error) return res.status(202).send(error);
             return res.json({
                 message: "Customer updated successfully"
             });
