@@ -25,7 +25,7 @@ class ProductController {
         
         const q = `INSERT INTO product (${productTable}) VALUES (?)`;
 
-        db.query(q, [values], (error, data) => {
+        db.query(q, [values], (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /products] - ${error.message}`);
                 return res.json(400).send(error);
@@ -40,7 +40,7 @@ class ProductController {
         const values = [id]
         const q = "SELECT * FROM product WHERE id = ? LIMIT 1;"; 
         
-        db.query(q, values, (error, data) => {
+        db.query(q, values, (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /products/:id] - ${error.message}`);
                 return res.json(404).json(error);
@@ -48,7 +48,7 @@ class ProductController {
 
             return res.status(200).json({
                 ...data[0],
-                barcode: `https://bwipjs-api.metafloor.com/?bcid=code128&text=${data[0].cEan}&includetext`
+                barcode: `https://bwipjs-api.metafloor.com/?bcid=ean13&text=${data[0].cEan}&includetext`
             });
         });
     }
@@ -62,7 +62,7 @@ class ProductController {
 
         const q = "SELECT * FROM product LIMIT ? OFFSET ?;";
         
-        db.query(q, values, (error, data) => {
+        db.query(q, values, (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /products] - ${error.message}`);
                 return res.json(404).json(error);
@@ -77,7 +77,7 @@ class ProductController {
         const values = [req.body.produto];
         const q = "UPDATE product SET `produto`= ? WHERE id = ?";
 
-        db.query(q, [...values, id], (error, data) => {
+        db.query(q, [...values, id], (error: Error, data) => {
             if (error) {
                 logger.error(`[PUT: /products/:id] - ${error.message}`);
                 return res.json(406).send(error);
@@ -91,7 +91,7 @@ class ProductController {
         const id = req.params.id;
         const q = "DELETE FROM product WHERE id = ?";
     
-        db.query(q, [id], (error, data) => {
+        db.query(q, [id], (error: Error, data) => {
             if (error) {
                 logger.error(`[DELETE: /products/:id] - ${error.message}`);
                 return res.json(405).send(error);
