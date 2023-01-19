@@ -25,25 +25,22 @@ class ProductController {
         const q = `INSERT INTO product (${productTable}) VALUES (?)`;
 
         db.query(q, [values], (error, data) => {
-            if (error) return res.send(error);
+            if (error) return res.json(400).send(error);
             return res.json(201).json(data);
         })
     }
 
     index(req: Request, res: Response) {
         const id = req.params.id;
-
         const values = [id]
-
         const q = "SELECT * FROM product WHERE id = ? LIMIT 1;"; 
         
         db.query(q, values, (error, data) => {
-            if (error) {
-                console.log(error);
-                return res.json(error);
-            }
-
-            return res.status(200).json(data);
+            if (error) return res.json(404).json(error);
+            return res.status(200).json({
+                ...data[0],
+                barcode: `https://bwipjs-api.metafloor.com/?bcid=code128&text=${data[0].cEan}&includetext`
+            });
         });
     }
 
@@ -57,10 +54,7 @@ class ProductController {
         const q = "SELECT * FROM product LIMIT ? OFFSET ?;";
         
         db.query(q, values, (error, data) => {
-            if (error) {
-                console.log(error);
-                return res.json(error);
-            }
+            if (error) return res.json(404).json(error);
             return res.status(200).json(data);
         });
     }
@@ -68,22 +62,21 @@ class ProductController {
     update(req: Request, res: Response) {
         const id = req.params.id;
         const values = [req.body.produto];
-
         const q = "UPDATE product SET `produto`= ? WHERE id = ?";
 
         db.query(q, [...values, id], (error, data) => {
-            if (error) return res.send(error);
-            return res.json(data);
+            if (error) return res.json(406).send(error);
+            return res.status(202).json(data);
         });
     }
 
-    delete(req: Request, res: Response) {
+    destroy(req: Request, res: Response) {
         const id = req.params.id;
         const q = "DELETE FROM product WHERE id = ?";
     
         db.query(q, [id], (error, data) => {
-            if (error) return res.send(error);
-            return res.status(202).json({
+            if (error) return res.json(405).send(error);
+            return res.status(204).json({
                 message: "Product deleted successfully"
             });
         });

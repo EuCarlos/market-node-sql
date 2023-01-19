@@ -25,7 +25,7 @@ class CustomerController {
         const q = `INSERT INTO customer (${customerTable}) VALUES (?)`;
         
         db.query(q, [values], (error: Error, data) => {
-            if (error) return res.send(error);
+            if (error) return res.status(400).send(error);
             return res.status(201).json({ message: "Customer created successfully" });
         });
     }
@@ -52,18 +52,14 @@ class CustomerController {
         `
 
         db.query(q, values, (error, data) => {
-            if (error) {
-                console.log(error);
-                return res.json(error);
-            }
-            
-            return res.status(200).json({
+            if (error) return res.status(404).json(error);
+    
+            return res.json({
                 data: data,
                 page: {
                     previous: skip <= 0 ? undefined: skip - 1,
                     current: skip,
-                    next: skip + 1,
-                    totalPages: 0 // corrigir esse problema
+                    next: skip + 1
                 }
             });
         });
@@ -85,11 +81,9 @@ class CustomerController {
         `
         
         db.query(q, id, (error, data) => {
-            if (error) {
-                console.log(error);
-                return res.json(error);
-            }
-            return res.status(200).json(data);
+            if (error) return res.status(404).json(error);
+
+            return res.json(data);
         });
     }
 
@@ -115,8 +109,8 @@ class CustomerController {
         `;
 
         db.query(q, [...values, id], (error, data) => {
-            if (error) return res.status(202).send(error);
-            return res.json({
+            if (error) return res.status(406).send(error);
+            return res.status(202).json({
                 message: "Customer updated successfully"
             });
         });
@@ -127,8 +121,8 @@ class CustomerController {
         const q = "DELETE FROM customer WHERE id = ?";
     
         db.query(q, id, (error, data) => {
-            if (error) return res.send(error);
-            return res.status(202).json({
+            if (error) return res.status(405).send(error);
+            return res.status(204).json({
                 message: "Customer deleted successfully"
             });
         });

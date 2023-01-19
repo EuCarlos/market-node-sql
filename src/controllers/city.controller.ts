@@ -8,13 +8,11 @@ class CityController {
         const skip = req.query.skip || 0;
 
         const hasPagination = take < 0 || take > 100 ? 10 : take;
-
         const values = [Number(hasPagination), Number(skip)] // [search, hasPagination, skip]
-
         const q = "SELECT * FROM city LIMIT ? OFFSET ?";
 
         db.query(q, values, (error, data) => {
-            if (error) return res.send(error);
+            if (error) return res.json(404).send(error);
             return res.json(data);
         })
     }
@@ -24,8 +22,8 @@ class CityController {
         const q = "SELECT * FROM city WHERE id = ?";
 
         db.query(q, id, (error, data) => {
-            if (error) return res.send(error);
-            return res.json(data);
+            if (error) return res.json(404).send(error);
+            return res.json(data[0]);
         })
     }
 }
