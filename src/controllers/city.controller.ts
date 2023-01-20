@@ -15,7 +15,7 @@ class CityController {
         db.query(q, values, (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /cities] - ${error.message}`);
-                return res.json(404).send(error);
+                return res.status(404).send(error);
             };
 
             return res.json(data);
@@ -29,7 +29,7 @@ class CityController {
         db.query(q, id, (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /cities/:id] - ${error.message}`);
-                return res.json(404).send(error);
+                return res.status(404).send(error);
             }
             
             return res.json(data[0]);

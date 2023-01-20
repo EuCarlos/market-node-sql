@@ -28,10 +28,10 @@ class ProductController {
         db.query(q, [values], (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /products] - ${error.message}`);
-                return res.json(400).send(error);
+                return res.status(400).send(error);
             }
 
-            return res.json(201).json(data);
+            return res.status(201).json(data);
         })
     }
 
@@ -43,7 +43,7 @@ class ProductController {
         db.query(q, values, (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /products/:id] - ${error.message}`);
-                return res.json(404).json(error);
+                return res.status(404).json(error);
             }
 
             return res.status(200).json({
@@ -65,7 +65,7 @@ class ProductController {
         db.query(q, values, (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /products] - ${error.message}`);
-                return res.json(404).json(error);
+                return res.status(404).json(error);
             }
 
             return res.status(200).json(data);
@@ -80,7 +80,7 @@ class ProductController {
         db.query(q, [...values, id], (error: Error, data) => {
             if (error) {
                 logger.error(`[PUT: /products/:id] - ${error.message}`);
-                return res.json(406).send(error);
+                return res.status(406).send(error);
             }
 
             return res.status(202).json(data);
@@ -94,7 +94,7 @@ class ProductController {
         db.query(q, [id], (error: Error, data) => {
             if (error) {
                 logger.error(`[DELETE: /products/:id] - ${error.message}`);
-                return res.json(405).send(error);
+                return res.status(405).send(error);
             }
             
             return res.status(204).json({
