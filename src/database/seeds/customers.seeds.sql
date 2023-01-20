@@ -127,3 +127,6 @@ INSERT INTO customer (id,name,email,phone_number,cityId,zip_code) VALUES
 (354,'SAM DROGARIA LTDA - ME','altinoroberto@terra.com.br','1335917246',1907,'11707005'),
 (355,'TONEZE & TONEZE SUMARE LTDA - ME','farmaciapaulista.adm@gmail.com','1938643134',471,'13178110'),
 (356,'TOP FARMA LITORAL LTDA - ME','altinoroberto@terra.com.br','1335942040',11281,'11709005');
+
+UPDATE customer set cityId = 3500105 WHERE id = 238;
+UPDATE customer set cityId = 3500204 WHERE id = 240;

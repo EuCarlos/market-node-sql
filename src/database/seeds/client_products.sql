@@ -1,0 +1,4 @@
+INSERT INTO customer_product(customerId,productId) VALUES
+(238, '7896108560019'),
+(240, '7896114300210'),
+(240, '7896114300098');
