@@ -11,7 +11,7 @@ class SalesRegistrationController {
         db.query(q, [customerId, productId], (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /customers/purchase] - ${error.message}`);
-                return res.status(400).send(error);
+                return res.status(400).json({ message: error.message });
             }
 
             return res.status(201).json({
@@ -45,7 +45,7 @@ class SalesRegistrationController {
         db.query(q, [customerId], (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /customers/:customerId/purchase] - ${error.message}`);
-                return res.status(404).json(error);
+                return res.status(404).json({ message: error.message });
             }
 
             return res.status(200).json(data);
@@ -77,7 +77,7 @@ class SalesRegistrationController {
         db.query(q, [customerId, purchaseId], (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /customers/:customerId/purchase/:purchaseId] - ${error.message}`);
-                return res.status(404).json(error);
+                return res.status(404).json({ message: error.message });
             }
 
             return res.status(200).json(data[0]);
@@ -92,12 +92,10 @@ class SalesRegistrationController {
         db.query(q, [id], (error: Error, data) => {
             if (error) {
                 logger.error(`[DELETE: /customers/purchase/:id] - ${error.message}`);
-                return res.status(405).send(error);
+                return res.status(405).json({ message: error.message });
             }
             
-            return res.status(204).json({
-                message: "Purchase  deleted successfully"
-            });
+            return res.status(204).json({ message: "Purchase  deleted successfully" });
         });
     }
 }

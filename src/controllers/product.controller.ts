@@ -28,10 +28,10 @@ class ProductController {
         db.query(q, [values], (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /products] - ${error.message}`);
-                return res.status(400).send(error);
+                return res.status(400).send({ message: error.message });
             }
 
-            return res.status(201).json(data);
+            return res.status(201).json({ message: "Product created successfully"});
         })
     }
 
@@ -43,7 +43,7 @@ class ProductController {
         db.query(q, values, (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /products/:id] - ${error.message}`);
-                return res.status(404).json(error);
+                return res.status(404).json({ message: error.message });
             }
 
             return res.status(200).json({
@@ -65,7 +65,7 @@ class ProductController {
         db.query(q, values, (error: Error, data) => {
             if (error) {
                 logger.error(`[GET: /products] - ${error.message}`);
-                return res.status(404).json(error);
+                return res.status(404).json({ message: error.message });
             }
 
             return res.status(200).json(data);
@@ -80,10 +80,10 @@ class ProductController {
         db.query(q, [...values, id], (error: Error, data) => {
             if (error) {
                 logger.error(`[PUT: /products/:id] - ${error.message}`);
-                return res.status(406).send(error);
+                return res.status(406).json({ message: error.message });
             }
 
-            return res.status(202).json(data);
+            return res.status(202).json({ message: "Product updated successfully" });
         });
     }
 
@@ -94,12 +94,10 @@ class ProductController {
         db.query(q, [id], (error: Error, data) => {
             if (error) {
                 logger.error(`[DELETE: /products/:id] - ${error.message}`);
-                return res.status(405).send(error);
+                return res.status(405).json({ message: error.message });
             }
             
-            return res.status(204).json({
-                message: "Product deleted successfully"
-            });
+            return res.status(204).json({ message: "Product deleted successfully" });
         });
     }
 }

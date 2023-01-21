@@ -10,7 +10,7 @@ class CustomerController {
         db.query(q, (error, data) => {
             if (error) {
                 logger.error(`[GET: /customers/count] - ${error.message}`);
-                return res.json(error);
+                return res.json({ message: error.message });
             }
             
             return res.status(200).json(data[0]);
@@ -31,7 +31,7 @@ class CustomerController {
         db.query(q, [values], (error: Error, data) => {
             if (error) {
                 logger.error(`[POST: /customers] - ${error.message}`);
-                return res.status(400).send(error);
+                return res.status(400).json({ message: error.message });
             }
             return res.status(201).json({ message: "Customer created successfully" });
         });
@@ -61,7 +61,7 @@ class CustomerController {
         db.query(q, values, (error, data) => {
             if (error) {
                 logger.error(`[GET: /customers] - ${error.message}`);
-                return res.status(404).json(error);
+                return res.status(404).json({ message: error.message });
             }
     
             return res.json({
@@ -78,7 +78,8 @@ class CustomerController {
     index(req, res) {
         const { id } = req.params
         const q = `
-        SELECT 
+        SELECT
+            cr.id,
             cr.name AS customer,
             email,
             phone_number,
@@ -93,7 +94,7 @@ class CustomerController {
         db.query(q, id, (error, data) => {
             if (error) {
                 logger.error(`[GET: /customers/:id] - ${error.message}`);
-                return res.status(404).json(error);
+                return res.status(404).json({ message: error.message });
             }
 
             return res.json(data);
@@ -124,7 +125,7 @@ class CustomerController {
         db.query(q, [...values, id], (error, data) => {
             if (error) {
                 logger.error(`[PUT: : /customers/:id] - ${error.message}`);
-                return res.status(406).send(error);
+                return res.status(406).json({ message: error.message });
             }
 
             return res.status(202).json({
@@ -140,7 +141,7 @@ class CustomerController {
         db.query(q, id, (error, data) => {
             if (error) {
                 logger.error(`[DELETE: /customers/:id] - ${error.message}`);
-                return res.status(405).send(error);
+                return res.status(405).json({ message: error.message });
             }
 
             return res.status(204).json({
