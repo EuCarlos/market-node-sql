@@ -1,0 +1,1526 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "market-node-sql",
+    "description": "Contains all available API endpoints in this codebase",
+    "termsOfService": "http://swagger.io/terms/",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "localhost:8000/api/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Customers Module",
+      "description": "Everything about your Customers"
+    },
+    {
+      "name": "Purchases Module",
+      "description": "Everything about your Purchases"
+    },
+    {
+      "name": "Products Module",
+      "description": "Everything about your Products"
+    },
+    {
+      "name": "Cities Module",
+      "description": "Everything about your Cities"
+    }
+  ],
+  "paths": {
+    "/customers": {
+      "get": {
+        "tags": [
+          "Customers Module"
+        ],
+        "summary": "List all customers by pagination",
+        "description": "List all customers by pagination using \"take\" and \"skip\" queries",
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customers/properties/GetAll"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No value found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Customers Module"
+        ],
+        "summary": "Create a new customer",
+        "description": "Create a new customer",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update user profile attributes",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Customers/properties/Create"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customers/properties/Create"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unacceptable Values",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/count": {
+      "get": {
+        "tags": [
+          "Customers Module"
+        ],
+        "summary": "Total registered customers",
+        "description": "Show the total number of registered customers",
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customers/properties/Count"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No value found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{customerId}": {
+      "get": {
+        "tags": [
+          "Customers Module"
+        ],
+        "summary": "Get a customer by id",
+        "description": "Get a customer by id",
+        "operationId": "getCustomers",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "description": "Customer id registered in the database",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": 244
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customers/properties/GetOne"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No value found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Customers Module"
+        ],
+        "summary": "Update a customer",
+        "description": "Update customer",
+        "operationId": "updateCustomers",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "description": "Customer id registered in the database",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": 244
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update user profile attributes",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Pamela's Bealty LTDA"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "pamela@beal.ty"
+                },
+                "phone_number": {
+                  "type": "string",
+                  "example": "11912346578"
+                },
+                "cityId": {
+                  "type": "number",
+                  "example": 3500105
+                },
+                "zip_code": {
+                  "type": "string",
+                  "example": "13280000"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successfully Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customers/properties/Update"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Customers Module"
+        ],
+        "summary": "Delete a customer",
+        "description": "Delete customer",
+        "operationId": "deleteCustomers",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "description": "Customer id registered in the database",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": 360
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully Deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customers/properties/Delete"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{customerId}/purchase": {
+      "get": {
+        "tags": [
+          "Purchases Module"
+        ],
+        "summary": "Lists all purchases of a customer",
+        "description": "Lists all purchases of a customer by customer id",
+        "operationId": "getPurchaseList",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "description": "Customer id registered in the database",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": 240
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Purchases/properties/GetAll"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No value found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{customerId}/purchase/{purchaseId}": {
+      "get": {
+        "tags": [
+          "Purchases Module"
+        ],
+        "summary": "Get a purchase of a customer by id",
+        "description": "Lists a purchase of a customer by customer id and purchase id",
+        "operationId": "updatePurchaseUnique",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "description": "Customer id registered in the database",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": 240
+            }
+          },
+          {
+            "name": "purchaseId",
+            "in": "path",
+            "description": "Purchase id registered in the database",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": 4
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Purchases/properties/GetOne"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No value found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/purchase/": {
+      "post": {
+        "tags": [
+          "Purchases Module"
+        ],
+        "summary": "Create a new purchase",
+        "description": "Create a new purchase",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update user profile attributes",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "customerId": {
+                  "type": "number",
+                  "example": 240
+                },
+                "productId": {
+                  "type": "string",
+                  "example": 7896114300098
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Purchases/properties/Create"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unacceptable Values",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/purchase/{purchaseId}": {
+      "delete": {
+        "tags": [
+          "Purchases Module"
+        ],
+        "summary": "Delete a new purchase",
+        "description": "Dele purchase",
+        "operationId": "deletePurchase",
+        "parameters": [
+          {
+            "name": "purchaseId",
+            "in": "path",
+            "description": "Purchase id registered in the database",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": 2
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully Deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Purchases/properties/Delete"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "Products Module"
+        ],
+        "summary": "List all products by pagination",
+        "description": "Get all products by id",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "take",
+            "description": "Maximum content per page",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "number",
+              "default": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Current page",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "number",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products/properties/GetAll"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No value found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products Module"
+        ],
+        "summary": "Create a new product",
+        "description": "Create a new product",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Update user profile attributes",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": 7896114302368
+                },
+                "produto": {
+                  "type": "string",
+                  "example": "ESCOVA DENTAL INTENSE PLUS - Macia - SANIFILL"
+                },
+                "NCM": {
+                  "type": "number",
+                  "example": 96032100
+                },
+                "unidade_comercial_produto": {
+                  "type": "string",
+                  "example": "UN"
+                },
+                "preco_comercial_produto": {
+                  "type": "number",
+                  "example": 9.18
+                },
+                "unidade_tributavel_produto": {
+                  "type": "string",
+                  "example": "UN"
+                },
+                "preco_tributavel_produto": {
+                  "type": "number",
+                  "example": 9.18
+                },
+                "CFOP": {
+                  "type": "number",
+                  "example": 5405
+                },
+                "CST": {
+                  "type": "number",
+                  "example": 60
+                },
+                "origem": {
+                  "type": "number",
+                  "example": 0
+                },
+                "situacao_tributaria": {
+                  "type": "number",
+                  "example": 60
+                },
+                "regime": {
+                  "type": "number",
+                  "example": 3
+                },
+                "PIS": {
+                  "type": "number",
+                  "example": 7
+                },
+                "cofins": {
+                  "type": "number",
+                  "example": 7
+                },
+                "cEan": {
+                  "type": "number",
+                  "example": 7896114312060
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products/properties/Create"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unacceptable Values",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{productsId}": {
+      "get": {
+        "tags": [
+          "Products Module"
+        ],
+        "summary": "Get a product by id",
+        "description": "Get a product by id",
+        "operationId": "getProductById",
+        "parameters": [
+          {
+            "name": "productsId",
+            "in": "path",
+            "description": "Product id registered in the database",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": 7896114312060
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products/properties/GetOne"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No value found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products Module"
+        ],
+        "summary": "Update a product",
+        "description": "Update product",
+        "operationId": "updateProduct",
+        "parameters": [
+          {
+            "name": "productsId",
+            "in": "path",
+            "description": "Product id registered in the database",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": 7896114302368
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update user profile attributes",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "example": "ESCOVA DENTAL INTENSE PLUS - Macia - SANIFILL ROSA"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successfully Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products/properties/Update"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products Module"
+        ],
+        "summary": "Delete a product",
+        "description": "Delete product",
+        "operationId": "deleteProduct",
+        "parameters": [
+          {
+            "name": "productsId",
+            "in": "path",
+            "description": "Product id registered in the database",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": 7896114302368
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully Deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products/properties/Delete"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cities": {
+      "get": {
+        "tags": [
+          "Cities Module"
+        ],
+        "summary": "List all cities by pagination",
+        "description": "List all cities by pagination using \"take\" and \"skip\" queries",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "take",
+            "description": "Maximum content per page",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "number",
+              "default": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "description": "Current page",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "number",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cities/properties/GetAll"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No value found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cities/{cityId}": {
+      "get": {
+        "tags": [
+          "Cities Module"
+        ],
+        "summary": "Get a city by id",
+        "description": "Get a city by id",
+        "operationId": "getCityById",
+        "parameters": [
+          {
+            "name": "cityId",
+            "in": "path",
+            "description": "City id registered in the database",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": 3500550
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cities/properties/GetOne"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No value found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Customers": {
+        "type": "object",
+        "properties": {
+          "GetAll": {
+            "properties": {
+              "data": {
+                "items": {
+                  "type": "object"
+                },
+                "example": [
+                  {
+                    "id": 238,
+                    "customer": "A SANTOS BERNARDO & CIA LTDA - ME",
+                    "email": "altinoroberto@terra.com.br",
+                    "phone_number": "1934584082",
+                    "zip_code": "13454355",
+                    "city": "ADAMANTINA"
+                  },
+                  {
+                    "id": 240,
+                    "customer": "AM ORGANIZACAO FARMACEUTICA LTDA",
+                    "email": "altinoroberto@terra.com.br",
+                    "phone_number": "1938592917",
+                    "zip_code": "13270010",
+                    "city": "ADOLFO"
+                  },
+                  {
+                    "id": 244,
+                    "customer": "Pamela's Bealty LTDA",
+                    "email": "pamela@beal.ty",
+                    "phone_number": "11912346578",
+                    "zip_code": "13280000",
+                    "city": "ADAMANTINA"
+                  },
+                  {
+                    "id": 359,
+                    "customer": "Teste 1",
+                    "email": "teste@dev.io",
+                    "phone_number": "11912345678",
+                    "zip_code": "08054213",
+                    "city": "ADAMANTINA"
+                  },
+                  {
+                    "id": 360,
+                    "customer": "Teste 2",
+                    "email": "teste@dev.io",
+                    "phone_number": "11912345678",
+                    "zip_code": "08054213",
+                    "city": "ADAMANTINA"
+                  },
+                  {
+                    "id": 358,
+                    "customer": "Marcos",
+                    "email": "marcos@mail.dev",
+                    "phone_number": "11912345678",
+                    "zip_code": "13030490",
+                    "city": "ADAMANTINA"
+                  },
+                  {
+                    "id": 361,
+                    "customer": "Teste 3",
+                    "email": "teste@dev.io",
+                    "phone_number": "11912345678",
+                    "zip_code": "08054213",
+                    "city": "ADAMANTINA"
+                  },
+                  {
+                    "id": 362,
+                    "customer": "Teste 3",
+                    "email": "teste@dev.io",
+                    "phone_number": "11912345678",
+                    "zip_code": "08054213",
+                    "city": "ADAMANTINA"
+                  }
+                ]
+              },
+              "page": {
+                "type": "object",
+                "properties": {
+                  "previou": {
+                    "type": "number",
+                    "example": 5
+                  },
+                  "current": {
+                    "type": "number",
+                    "example": 6
+                  },
+                  "next": {
+                    "type": "number",
+                    "example": 7
+                  },
+                  "totalPages": {
+                    "type": "number",
+                    "example": 25
+                  }
+                }
+              }
+            }
+          },
+          "Create": {
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Carlos Alves"
+              },
+              "email": {
+                "type": "string",
+                "example": "carlos@admin.dev"
+              },
+              "phone_number": {
+                "type": "string",
+                "example": 11912345678
+              },
+              "cityId": {
+                "type": "number",
+                "example": 3500105
+              },
+              "zip_code": {
+                "type": "string",
+                "example": 13280000
+              }
+            }
+          },
+          "Count": {
+            "properties": {
+              "total": {
+                "type": "number",
+                "example": 250
+              }
+            }
+          },
+          "GetOne": {
+            "properties": {
+              "id": {
+                "type": "number",
+                "example": 244
+              },
+              "customer": {
+                "type": "string",
+                "example": "Pamela's Bealty LTDA"
+              },
+              "email": {
+                "type": "string",
+                "example": "pamela@beal.ty"
+              },
+              "phone_number": {
+                "type": "string",
+                "example": 11912346578
+              },
+              "zip_code": {
+                "type": "string",
+                "example": 13280000
+              },
+              "city": {
+                "type": "string",
+                "example": "ADAMANTINA"
+              }
+            }
+          },
+          "Update": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Customer updated successfully"
+              }
+            }
+          },
+          "Delete": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Customer deleted successfully"
+              }
+            }
+          }
+        }
+      },
+      "Purchases": {
+        "type": "object",
+        "properties": {
+          "GetAll": {
+            "items": {
+              "type": "object"
+            },
+            "example": [
+              {
+                "id": 3,
+                "customer": "AM ORGANIZACAO FARMACEUTICA LTDA",
+                "phone_number": "1938592917",
+                "city": "ADOLFO",
+                "produto": "PASSAFIO C/50 UN - SANIFILL",
+                "barcode": 7896114300210,
+                "unidade_comercial_produto": "UN",
+                "preco_comercial_produto": 8.14,
+                "preco_tributavel_produto": 8.14
+              },
+              {
+                "id": 4,
+                "customer": "AM ORGANIZACAO FARMACEUTICA LTDA",
+                "phone_number": "1938592917",
+                "city": "ADOLFO",
+                "produto": "FIO DENTAL CLASS 500 M SANIFILL",
+                "barcode": 7896114300098,
+                "unidade_comercial_produto": "UN",
+                "preco_comercial_produto": 13.64,
+                "preco_tributavel_produto": 13.64
+              }
+            ]
+          },
+          "Create": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Successful Purchase"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "customerId": {
+                    "type": "number",
+                    "example": 240
+                  },
+                  "productId": {
+                    "type": "string",
+                    "example": 7896114300098
+                  }
+                }
+              }
+            }
+          },
+          "GetOne": {
+            "properties": {
+              "id": {
+                "type": "number",
+                "example": "4,"
+              },
+              "customer": {
+                "type": "string",
+                "example": "AM ORGANIZACAO FARMACEUTICA LTDA"
+              },
+              "phone_number": {
+                "type": "string",
+                "example": "1938592917"
+              },
+              "city": {
+                "type": "string",
+                "example": "ADOLFO"
+              },
+              "produto": {
+                "type": "string",
+                "example": "FIO DENTAL CLASS 500 M SANIFILL"
+              },
+              "barcode": {
+                "type": "number",
+                "example": 7896114300098
+              },
+              "unidade_comercial_produto": {
+                "type": "string",
+                "example": "UN"
+              },
+              "preco_comercial_produto": {
+                "type": "number",
+                "example": 13.64
+              },
+              "preco_tributavel_produto": {
+                "type": "number",
+                "example": 13.64
+              }
+            }
+          },
+          "Delete": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Purchase  deleted successfully"
+              }
+            }
+          }
+        }
+      },
+      "Products": {
+        "type": "object",
+        "properties": {
+          "GetAll": {
+            "items": {
+              "type": "object"
+            },
+            "example": [
+              {
+                "id": "7896108510410",
+                "produto": "ESCOVA DENTAL POCKET Portatil - Blister -SANIFILL",
+                "NCM": 96032100,
+                "unidade_comercial_produto": "UN",
+                "preco_comercial_produto": 2.28,
+                "unidade_tributavel_produto": "UN",
+                "preco_tributavel_produto": 2.28,
+                "CFOP": 5405,
+                "CST": 60,
+                "origem": 0,
+                "situacao_tributaria": 60,
+                "regime": 3,
+                "PIS": 7,
+                "cofins": 7,
+                "cEan": 7896108510410
+              },
+              {
+                "id": "7896108560019",
+                "produto": "PROTETOR CERDAS - SANIFILL",
+                "NCM": 39239000,
+                "unidade_comercial_produto": "UN",
+                "preco_comercial_produto": 4.05,
+                "unidade_tributavel_produto": "UN",
+                "preco_tributavel_produto": 4.05,
+                "CFOP": 5405,
+                "CST": 60,
+                "origem": 0,
+                "situacao_tributaria": 60,
+                "regime": 3,
+                "PIS": 7,
+                "cofins": 7,
+                "cEan": 7896108560019
+              },
+              {
+                "id": "7896114300067",
+                "produto": "ESCOVA DENTAL POCKET Portatil - Display - SANIFILL",
+                "NCM": 96032100,
+                "unidade_comercial_produto": "UN",
+                "preco_comercial_produto": 2.28,
+                "unidade_tributavel_produto": "UN",
+                "preco_tributavel_produto": 2.28,
+                "CFOP": 5405,
+                "CST": 60,
+                "origem": 0,
+                "situacao_tributaria": 60,
+                "regime": 3,
+                "PIS": 7,
+                "cofins": 7,
+                "cEan": 7896114300067
+              },
+              {
+                "id": "7896114300098",
+                "produto": "FIO DENTAL CLASS 500 M SANIFILL",
+                "NCM": 33062000,
+                "unidade_comercial_produto": "UN",
+                "preco_comercial_produto": 13.64,
+                "unidade_tributavel_produto": "UN",
+                "preco_tributavel_produto": 13.64,
+                "CFOP": 5405,
+                "CST": 60,
+                "origem": 0,
+                "situacao_tributaria": 60,
+                "regime": 3,
+                "PIS": 7,
+                "cofins": 7,
+                "cEan": 7896114300098
+              },
+              {
+                "id": "7896114300210",
+                "produto": "PASSAFIO C/50 UN - SANIFILL",
+                "NCM": 90183999,
+                "unidade_comercial_produto": "UN",
+                "preco_comercial_produto": 8.14,
+                "unidade_tributavel_produto": "UN",
+                "preco_tributavel_produto": 8.14,
+                "CFOP": 5405,
+                "CST": 60,
+                "origem": 0,
+                "situacao_tributaria": 60,
+                "regime": 3,
+                "PIS": 7,
+                "cofins": 7,
+                "cEan": 7896114300210
+              },
+              {
+                "id": "7896114300371",
+                "produto": "FITA DENTAL 50M SANIFILL",
+                "NCM": 33062000,
+                "unidade_comercial_produto": "UN",
+                "preco_comercial_produto": 4.33,
+                "unidade_tributavel_produto": "UN",
+                "preco_tributavel_produto": 4.33,
+                "CFOP": 5405,
+                "CST": 60,
+                "origem": 0,
+                "situacao_tributaria": 60,
+                "regime": 3,
+                "PIS": 7,
+                "cofins": 7,
+                "cEan": 7896114300371
+              },
+              {
+                "id": "7896114300425",
+                "produto": "FIO DENTAL CLASS P100 L125 M SANIFILL",
+                "NCM": 33062000,
+                "unidade_comercial_produto": "UN",
+                "preco_comercial_produto": 5.08,
+                "unidade_tributavel_produto": "UN",
+                "preco_tributavel_produto": 5.08,
+                "CFOP": 5405,
+                "CST": 60,
+                "origem": 0,
+                "situacao_tributaria": 60,
+                "regime": 3,
+                "PIS": 7,
+                "cofins": 7,
+                "cEan": 7896114300425
+              },
+              {
+                "id": "7896114300708",
+                "produto": "ESCOVA DENTAL ULTRA PROFISSIONAL \" P \" MACIA - SANIFILL",
+                "NCM": 96032100,
+                "unidade_comercial_produto": "UN",
+                "preco_comercial_produto": 4.39,
+                "unidade_tributavel_produto": "UN",
+                "preco_tributavel_produto": 4.39,
+                "CFOP": 5405,
+                "CST": 60,
+                "origem": 0,
+                "situacao_tributaria": 60,
+                "regime": 3,
+                "PIS": 7,
+                "cofins": 7,
+                "cEan": 7896114300708
+              },
+              {
+                "id": "7896114300722",
+                "produto": "ESCOVA DENTAL ULTRA PROFISSIONAL \" M \" MACIA - SANIFILL",
+                "NCM": 96032100,
+                "unidade_comercial_produto": "UN",
+                "preco_comercial_produto": 4.39,
+                "unidade_tributavel_produto": "UN",
+                "preco_tributavel_produto": 4.39,
+                "CFOP": 5405,
+                "CST": 60,
+                "origem": 0,
+                "situacao_tributaria": 60,
+                "regime": 3,
+                "PIS": 7,
+                "cofins": 7,
+                "cEan": 7896114300722
+              },
+              {
+                "id": "7896114301101",
+                "produto": "ESCOVA DENTAL ORAL MAGIC L2P1 - Media - SANIFILL",
+                "NCM": 96032100,
+                "unidade_comercial_produto": "UN",
+                "preco_comercial_produto": 4.17,
+                "unidade_tributavel_produto": "UN",
+                "preco_tributavel_produto": 4.17,
+                "CFOP": 5405,
+                "CST": 60,
+                "origem": 0,
+                "situacao_tributaria": 60,
+                "regime": 3,
+                "PIS": 7,
+                "cofins": 7,
+                "cEan": 7896114301101
+              }
+            ]
+          },
+          "Create": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Product created successfully"
+              }
+            }
+          },
+          "GetOne": {
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "7896114312060"
+              },
+              "produto": {
+                "type": "string",
+                "example": "ESCOVA DENTAL INTENSE PLUS - Macia - SANIFILL"
+              },
+              "NCM": {
+                "type": "number",
+                "example": 96032100
+              },
+              "unidade_comercial_produto": {
+                "type": "string",
+                "example": "UN"
+              },
+              "preco_comercial_produto": {
+                "type": "number",
+                "example": "9.18,"
+              },
+              "unidade_tributavel_produto": {
+                "type": "string",
+                "example": "UN"
+              },
+              "preco_tributavel_produto": {
+                "type": "number",
+                "example": 9.18
+              },
+              "CFOP": {
+                "type": "number",
+                "example": 5405
+              },
+              "CST": {
+                "type": "number",
+                "example": 60
+              },
+              "origem": {
+                "type": "number",
+                "example": 0
+              },
+              "situacao_tributaria": {
+                "type": "number",
+                "example": 60
+              },
+              "regime": {
+                "type": "number",
+                "example": 3
+              },
+              "PIS": {
+                "type": "number",
+                "example": 7
+              },
+              "cofins": {
+                "type": "number",
+                "example": 7
+              },
+              "cEan": {
+                "type": "number",
+                "example": 7896114312060
+              },
+              "barcode": {
+                "type": "string",
+                "example": "https://bwipjs-api.metafloor.com/?bcid=ean13&text=7896114312060&includetext"
+              }
+            }
+          },
+          "Update": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Product updated successfully"
+              }
+            }
+          },
+          "Delete": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Product deleted successfully"
+              }
+            }
+          }
+        }
+      },
+      "Cities": {
+        "type": "object",
+        "properties": {
+          "GetAll": {
+            "items": {
+              "type": "object"
+            },
+            "example": [
+              {
+                "id": 3500105,
+                "name": "ADAMANTINA"
+              },
+              {
+                "id": 3500204,
+                "name": "ADOLFO"
+              },
+              {
+                "id": 3500303,
+                "name": "AGUAI"
+              },
+              {
+                "id": 3500402,
+                "name": "AGUAS DA PRATA"
+              },
+              {
+                "id": 3500501,
+                "name": "AGUAS DE LINDOIA"
+              },
+              {
+                "id": 3500550,
+                "name": "AGUAS DE SANTA BARBARA"
+              },
+              {
+                "id": 3500600,
+                "name": "AGUAS DE SAO PEDRO"
+              },
+              {
+                "id": 3500709,
+                "name": "AGUDOS"
+              },
+              {
+                "id": 3500758,
+                "name": "ALAMBARI"
+              },
+              {
+                "id": 3500808,
+                "name": "ALFREDO MARCONDES"
+              }
+            ]
+          },
+          "GetOne": {
+            "properties": {
+              "id": {
+                "type": "number",
+                "example": 3500550
+              },
+              "name": {
+                "type": "string",
+                "example": "AGUAS DE SANTA BARBARA"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
