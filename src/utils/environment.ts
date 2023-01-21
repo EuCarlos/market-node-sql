@@ -23,3 +23,33 @@ export const customerTable = [
     'cityId',
     'zip_code'
 ]
+
+export const allRoutes = {
+    documentation: "/docs",
+    customers: [
+        "[GET]: /customers",
+        "[POST]: /customers",
+        "[GET]: /customers/count",
+        "[GET]: /customers/{customerId}",
+        "[PUT]: /customers/{customerId}",
+        "[DELETE]: /customers/{customerId}"
+    ],
+    purshases: [
+        "[GET]: /customers/{customerId}/purchase",
+        "[GET]: /customers/{customerId}/purchase/{purchaseId}",
+        "[POST]: /customers/purchase/",
+        "/customers/purchase/{purchaseId}"
+    ],
+    products: [
+        "[GET]: /products",
+        "[POST]: /products",
+        "[GET]: /products/{productsId}",
+        "[PUT]: /products/{productsId}",
+        "[DELETE]: /products/{productsId}"
+    ],
+    cities: [
+        "[GET]: /cities",
+        "[GET]: /cities/{cityId}"
+    ]
+
+}

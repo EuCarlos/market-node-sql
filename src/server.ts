@@ -1,8 +1,10 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 require("dotenv").config();
 const bodyParser = require('body-parser');
-import swaggerUI from 'swagger-ui-express'
-import swaggerDOCs from './docs/swagger.json'
+
+import swaggerUI from 'swagger-ui-express';
+import swaggerDOCs from './docs/swagger.json';
+import { allRoutes } from './utils/environment';
 
 const customerRoutes = require('./routes/customers.routes');
 const productsRoutes = require('./routes/products.routes');
@@ -21,6 +23,13 @@ app
     .use('/api/customers', customerRoutes)
     .use('/api/products', productsRoutes)
     .use('/api/cities', citiesRoutes)
+    
+    .get('*', (req: Request, res: Response) => {
+        res.status(404).json({
+           message: "This route doesn't exist, check the documentation.",
+           existingRoutes: allRoutes
+        })
+    })
 
     .listen(PORT, () => {
         console.log(`🔥 Server is running in PORT ${PORT} - ${process.env.NODE_ENV}`)
